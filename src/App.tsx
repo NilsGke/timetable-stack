@@ -1,5 +1,4 @@
 import { ThemeProvider } from "./components/ThemeProvider";
-import { DarkModeToggle } from "./components/DarkModeToggle";
 import { Users } from "./components/Users";
 import { useUsers } from "./hooks/useUsers";
 import {
@@ -12,6 +11,7 @@ import { Modules } from "./components/Modules";
 import { useEffect } from "react";
 import { setData } from "./helpers/localStorage";
 import { TimeTable } from "./components/TimeTable";
+import { ButtonBar } from "./components/ButtonBar";
 
 function App() {
   const { users, addUser, updateUser, removeUser } = useUsers();
@@ -21,9 +21,8 @@ function App() {
   useEffect(() => setData({ users, modules }), [users, modules]);
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="timetable-stack-theme">
       <div className="size-full relative">
-        <DarkModeToggle className="top-4 right-4 absolute" />
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel defaultSize={25} minSize={20}>
             <ResizablePanelGroup direction="vertical">
@@ -46,6 +45,7 @@ function App() {
                   removeModule={removeModule}
                 />
               </ResizablePanel>
+              <ButtonBar />
             </ResizablePanelGroup>
           </ResizablePanel>
 
