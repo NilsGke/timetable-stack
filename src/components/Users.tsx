@@ -16,7 +16,7 @@ export function Users({
       <h2 className="text-2xl text-center">Users</h2>
       <div
         ref={parent}
-        className="flex flex-col gap-4 overflow-y-scroll max-h-full"
+        className="flex min-w-[375px] flex-col gap-4 overflow-y-scroll max-h-full"
       >
         {users.map((user) => (
           <User

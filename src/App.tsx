@@ -11,6 +11,7 @@ import { useModules } from "./hooks/useModules";
 import { Modules } from "./components/Modules";
 import { useEffect } from "react";
 import { setData } from "./helpers/localStorage";
+import { TimeTable } from "./components/TimeTable";
 
 function App() {
   const { users, addUser, updateUser, removeUser } = useUsers();
@@ -24,9 +25,9 @@ function App() {
       <div className="size-full relative">
         <DarkModeToggle className="top-4 right-4 absolute" />
         <ResizablePanelGroup direction="horizontal">
-          <ResizablePanel defaultSize={25} className="min-w-[450px]">
+          <ResizablePanel defaultSize={25} minSize={20}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={40}>
+              <ResizablePanel defaultSize={40} minSize={10}>
                 <Users
                   users={users}
                   updateUser={updateUser}
@@ -37,7 +38,7 @@ function App() {
 
               <ResizableHandle />
 
-              <ResizablePanel>
+              <ResizablePanel minSize={10}>
                 <Modules
                   modules={modules}
                   addModule={addModule}
@@ -51,7 +52,7 @@ function App() {
           <ResizableHandle />
 
           <ResizablePanel minSize={50}>
-            <div className="m-8">TIMETABLE</div>
+            <TimeTable />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

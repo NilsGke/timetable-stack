@@ -16,7 +16,7 @@ export function Modules({
       <h2 className="text-2xl text-center">Modules</h2>
       <div
         ref={parent}
-        className="max-h-full size-full flex gap-4 flex-col overflow-y-scroll"
+        className="max-h-full min-w-[375px] size-full flex gap-4 flex-col overflow-y-scroll"
       >
         {modules.map((module) => (
           <Module
