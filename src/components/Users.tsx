@@ -12,9 +12,12 @@ export function Users({
   const [parent] = useAutoAnimate();
 
   return (
-    <>
-      <h2>Users</h2>
-      <div className="flex flex-col gap-4" ref={parent}>
+    <div className="p-8 pb-0 grid-rows-[auto_1fr] h-full gap-8 grid">
+      <h2 className="text-2xl text-center">Users</h2>
+      <div
+        ref={parent}
+        className="flex flex-col gap-4 overflow-y-scroll max-h-full"
+      >
         {users.map((user) => (
           <User
             key={user.id}
@@ -24,10 +27,10 @@ export function Users({
           />
         ))}
 
-        <Button onClick={addUser} variant="outline">
+        <Button onClick={addUser} variant="outline" className="mb-4">
           +
         </Button>
       </div>
-    </>
+    </div>
   );
 }

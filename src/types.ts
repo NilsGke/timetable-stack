@@ -1,25 +1,38 @@
-import type { colorMap } from "./helpers/colors";
+import { colorNames } from "./helpers/colors";
+import { z } from "zod";
 
-export type UserType = {
-  id: string;
-  name: string;
-  color: keyof typeof colorMap;
-  events: Event[];
-};
+export const eventTypeSchema = z.object({
+  name: z.string(),
+  shortName: z.string(),
+  color: z.string(),
+});
 
-type EventType = {
-  name: string;
-  shortName: string;
-  color: string;
-};
+export const moduleSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  shortName: z.string(),
+});
 
-type Event = {
-  name: string;
-  slot: number;
-  type: EventType;
-};
+export const eventSchema = z.object({
+  type: eventTypeSchema,
+  timeSlot: z.number(),
+  room: z.string(),
+  moduleSchema,
+});
 
-export const EventTypes: EventType[] = [
+export const userSchema = z.object({
+  id: z.string().min(1),
+  name: z.string(),
+  color: z.enum(colorNames),
+  events: z.array(eventSchema),
+});
+
+export type EventTypeType = z.infer<typeof eventTypeSchema>;
+export type EventType = z.infer<typeof eventSchema>;
+export type ModuleType = z.infer<typeof moduleSchema>;
+export type UserType = z.infer<typeof userSchema>;
+
+export const eventTypes: EventTypeType[] = [
   {
     name: "Vorlesung",
     shortName: "V",
