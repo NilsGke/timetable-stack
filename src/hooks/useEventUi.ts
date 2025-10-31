@@ -1,4 +1,10 @@
-import { CELL_COUNT } from "@/constants";
+import {
+  CELL_COUNT,
+  HOUR_DIVISION,
+  SLOT_TIME,
+  STARTING_HOUR,
+} from "@/constants";
+import type { EventType } from "@/helpers/app.types";
 import { useEffect, useRef } from "react";
 
 export const useEventUi = () => {
@@ -28,6 +34,26 @@ export const useEventUi = () => {
     return { cellX, cellY };
   };
 
+  const calculateGridPosition = (module: EventType) => {
+    const startHours = module.startTime.getHours();
+    const startMinutes = module.startTime.getMinutes();
+    const endHours = module.endTime.getHours();
+    const endMinutes = module.endTime.getMinutes();
+    const day = module.startTime.getDay();
+
+    const rowSlot =
+      (startHours - STARTING_HOUR) * HOUR_DIVISION + startMinutes / SLOT_TIME;
+
+    const rowCount =
+      (endHours - startHours) * HOUR_DIVISION + endMinutes / SLOT_TIME;
+
+    return {
+      gridRowStart: rowSlot + 2,
+      gridColumnStart: day + 1,
+      gridRowEnd: rowSlot + 1 + rowCount,
+    };
+  };
+
   useEffect(() => {
     if (clickAreaRef.current === null) throw Error("click area is null");
 
@@ -44,5 +70,9 @@ export const useEventUi = () => {
     clickAreaRef.current.addEventListener("mousedown", mouseDown);
     clickAreaRef.current.addEventListener("mousemove", mouseMove);
   }, []);
-  return { clickAreaRef, highlighterElement: highlighterRef };
+  return {
+    clickAreaRef,
+    highlighterElement: highlighterRef,
+    calculateGridPosition,
+  };
 };

@@ -1,9 +1,18 @@
-import { CELL_COUNT, DAYS, SLOT_TIME, STARTING_TIME } from "@/constants";
+import {
+  CELL_COUNT,
+  DAYS,
+  eventTypes,
+  SLOT_TIME,
+  STARTING_HOUR,
+} from "@/constants";
+import type { UserType } from "@/helpers/app.types";
+import { colorMap, colorNames } from "@/helpers/colors";
 import { useEventUi } from "@/hooks/useEventUi";
 
-export function TimeTable() {
-  const { clickAreaRef, highlighterElement } = useEventUi();
-
+export function TimeTable({ users }: { users: UserType[] }) {
+  const { clickAreaRef, highlighterElement, calculateGridPosition } =
+    useEventUi();
+  console.log("rerender");
   return (
     <div
       className={
@@ -24,7 +33,7 @@ export function TimeTable() {
 
       {/* sidebar times */}
       {Array.from({ length: CELL_COUNT }).map((_, index) => {
-        const hour = STARTING_TIME + Math.floor((SLOT_TIME * index) / 60);
+        const hour = STARTING_HOUR + Math.floor((SLOT_TIME * index) / 60);
         const minute = (SLOT_TIME * index) % 60;
         return (
           <div
@@ -68,6 +77,36 @@ export function TimeTable() {
         className="size-[calc(100%-1px)] bg-zinc-100 dark:bg-zinc-900 ml-px mt-px"
         ref={highlighterElement}
       />
+
+      {/* events */}
+      {users.map((user) =>
+        user.events.map((event) => {
+          const type = eventTypes.find((t) => t.name === event.type)!;
+          return (
+            <div
+              className="mx-0.5 rounded-md text-xs grid grid-rows-[auto_1fr] overflow-hidden *:px-1 border-3"
+              key={event.startTime.toISOString()}
+              style={{
+                ...calculateGridPosition(event),
+                borderColor: type.color,
+              }}
+            >
+              <div
+                style={{ backgroundColor: type.color }}
+                className="text-white"
+              >
+                {event.module.shortName} – {type.shortName}
+              </div>
+              <div
+                className="h-full text-black"
+                style={{ backgroundColor: colorMap[user.color] }}
+              >
+                {event.module.name}
+              </div>
+            </div>
+          );
+        })
+      )}
     </div>
   );
 }

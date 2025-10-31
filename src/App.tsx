@@ -60,7 +60,7 @@ function App() {
           <ResizableHandle />
 
           <ResizablePanel minSize={50}>
-            <TimeTable />
+            <TimeTable users={users} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
