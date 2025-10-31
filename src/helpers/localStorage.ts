@@ -1,4 +1,4 @@
-import { moduleSchema, userSchema } from "@/types";
+import { moduleSchema, userSchema } from "@/helpers/app.types";
 import { z } from "zod";
 
 const schema = z.object({

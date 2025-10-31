@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { UserType } from "../types";
+import type { UserType } from "../helpers/app.types";
 import { getUnusedColor } from "@/helpers/colors";
 import { getData } from "@/helpers/localStorage";
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ModuleType } from "../types";
+import type { ModuleType } from "../helpers/app.types";
 import { getData } from "@/helpers/localStorage";
 
 export const useModules = () => {

@@ -1,4 +1,4 @@
-import type { ModuleType } from "../types";
+import type { ModuleType } from "../helpers/app.types";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "./ui/button";

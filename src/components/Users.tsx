@@ -1,11 +1,9 @@
 import { User } from "@/components/User";
-import { Button } from "./ui/button";
 import type { useUsers } from "@/hooks/useUsers";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export function Users({
   users,
-  addUser,
   updateUser,
   removeUser,
 }: ReturnType<typeof useUsers>) {
@@ -26,10 +24,9 @@ export function Users({
             removeUser={() => removeUser(user.id)}
           />
         ))}
-
-        <Button onClick={addUser} variant="outline" className="mb-4">
-          +
-        </Button>
+        {users.length === 0 && (
+          <span className="text-zinc-400 dark:text-zinc-600">no users</span>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { setData } from "./helpers/localStorage";
 import { TimeTable } from "./components/TimeTable";
 import { ButtonBar } from "./components/ButtonBar";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   const { users, addUser, updateUser, removeUser } = useUsers();
@@ -19,6 +20,8 @@ function App() {
 
   // store data on every update
   useEffect(() => setData({ users, modules }), [users, modules]);
+
+  console.log(users);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="timetable-stack-theme">
@@ -45,7 +48,12 @@ function App() {
                   removeModule={removeModule}
                 />
               </ResizablePanel>
-              <ButtonBar />
+              <ButtonBar
+                users={users}
+                addUser={addUser}
+                updateUser={updateUser}
+                removeUser={removeUser}
+              />
             </ResizablePanelGroup>
           </ResizablePanel>
 
@@ -56,6 +64,7 @@ function App() {
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
+      <Toaster />
     </ThemeProvider>
   );
 }

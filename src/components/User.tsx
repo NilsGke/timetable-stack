@@ -1,4 +1,4 @@
-import type { UserType } from "../types";
+import type { UserType } from "../helpers/app.types";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import ColorSelect from "./ColorSelect";
@@ -11,7 +11,7 @@ export const User = ({
 }: {
   user: UserType;
   updateUser: (user: UserType) => void;
-  removeUser: () => void;
+  removeUser?: () => void;
 }) => {
   return (
     <Card className="w-full">
@@ -29,9 +29,11 @@ export const User = ({
             color={user.color}
             updateColor={(color) => updateUser({ ...user, color })}
           />
-          <Button onClick={() => removeUser()} variant="outline">
-            -
-          </Button>
+          {removeUser && (
+            <Button onClick={() => removeUser()} variant="outline">
+              -
+            </Button>
+          )}
         </div>
       </CardContent>
     </Card>
