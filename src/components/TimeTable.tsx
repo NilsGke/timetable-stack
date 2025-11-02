@@ -11,11 +11,6 @@ import { cn } from "@/lib/utils";
 
 export function TimeTable({ users }: { users: UserType[] }) {
   const rects = createRects(users);
-  const gridCols = rects.map(({ colCount }) => colCount);
-  const highestColCount = gridCols.reduce(
-    (highest, current) => Math.max(highest, current),
-    0
-  );
   return (
     <div
       className="p-8 grid grid-cols-[auto_repeat(5,1fr)] size-full"
