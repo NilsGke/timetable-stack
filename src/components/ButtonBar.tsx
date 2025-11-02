@@ -13,14 +13,21 @@ export function ButtonBar({
 }: ReturnType<typeof useUsers>) {
   return (
     <div className="p-8 flex gap-2 justify-center border-t">
-      <DarkModeToggle />
-      <Button variant="outline" asChild size="icon" aria-label="Submit">
+      <DarkModeToggle className="size-12" />
+      <Button
+        variant="outline"
+        asChild
+        size="icon"
+        aria-label="Submit"
+        className="size-12"
+      >
         <a href="https://github.com/NilsGke/timetable-stack" target="_blank">
-          <Github />
+          <Github className="size-6" />
         </a>
       </Button>
-      <InfoPopover />
+      <InfoPopover className="size-12" />
       <FileInput
+        className="size-12"
         users={users}
         addUser={addUser}
         updateUser={updateUser}

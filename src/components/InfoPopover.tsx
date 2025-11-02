@@ -9,7 +9,7 @@ import {
 import { Check, CircleQuestionMark, Copy } from "lucide-react";
 import { Button } from "./ui/button";
 
-export function InfoPopover() {
+export function InfoPopover({ className }: { className?: string }) {
   async function copy() {
     const copyIcon = document.getElementById("copy-button-copy");
     const checkIcon = document.getElementById("copy-button-check");
@@ -26,8 +26,8 @@ export function InfoPopover() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon">
-          <CircleQuestionMark />
+        <Button variant="outline" size="icon" className={className}>
+          <CircleQuestionMark className="size-6" />
         </Button>
       </DialogTrigger>
       <DialogContent>

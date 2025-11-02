@@ -21,7 +21,8 @@ export function FileInput({
   addUser,
   updateUser,
   removeUser,
-}: ReturnType<typeof useUsers>) {
+  className,
+}: { className?: string } & ReturnType<typeof useUsers>) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -59,8 +60,8 @@ export function FileInput({
     <>
       <Dialog open={dialogOpen} onOpenChange={(state) => setDialogOpen(state)}>
         <DialogTrigger asChild>
-          <Button variant="outline" size="icon">
-            <Upload />
+          <Button variant="outline" size="icon" className={className}>
+            <Upload className="size-6" />
           </Button>
         </DialogTrigger>
         <DialogContent>
