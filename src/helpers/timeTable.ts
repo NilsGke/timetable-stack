@@ -62,7 +62,7 @@ export const createRects = (users: UserType[]) => {
       ))
   );
 
-  const rects2 = eventColumns.map((column, columnIndex) => {
+  const rects2 = eventColumns.map((column) => {
     const dayMap = new Map<
       ReturnType<typeof createKey>,
       ReturnType<typeof calculateEventPositions> & {
@@ -109,8 +109,8 @@ export const createRects = (users: UserType[]) => {
         ...position,
         users: [event.user],
         event,
-        gridColumnStart: gridColumnStart,
-        gridColumnEnd: gridColumnEnd,
+        gridColumnStart,
+        gridColumnEnd,
       });
     });
 

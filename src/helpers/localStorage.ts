@@ -1,17 +1,14 @@
-import { moduleSchema, userSchema } from "@/helpers/app.types";
+import { userSchema } from "@/helpers/app.types";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const schema = z.object({
-  modules: z.array(moduleSchema),
   users: z.array(userSchema),
 });
 
 const KEY = "timetable-stack-data";
 
-const defaultData = {
-  modules: [],
-  users: [],
-} satisfies z.infer<typeof schema>;
+const defaultData = { users: [] } satisfies z.infer<typeof schema>;
 
 export const getData = () => {
   const stringData = localStorage.getItem(KEY);
@@ -20,7 +17,11 @@ export const getData = () => {
     return defaultData;
   }
   const parsedData = JSON.parse(stringData);
-  return schema.parse(parsedData);
+  const result = schema.safeParse(parsedData);
+  if (result.success) return result.data;
+
+  toast.error("error while parsing old data.\n" + result.error.message);
+  return defaultData;
 };
 
 export const setData = (data: z.infer<typeof schema>) =>

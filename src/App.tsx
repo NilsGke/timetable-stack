@@ -6,8 +6,6 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useModules } from "./hooks/useModules";
-import { Modules } from "./components/Modules";
 import { useEffect } from "react";
 import { setData } from "./helpers/localStorage";
 import { TimeTable } from "./components/TimeTable";
@@ -16,10 +14,9 @@ import { Toaster } from "./components/ui/sonner";
 
 function App() {
   const { users, addUser, updateUser, removeUser } = useUsers();
-  const { modules, addModule, updateModule, removeModule } = useModules();
 
   // store data on every update
-  useEffect(() => setData({ users, modules }), [users, modules]);
+  useEffect(() => setData({ users }), [users]);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="timetable-stack-theme">
@@ -27,25 +24,13 @@ function App() {
         <ResizablePanelGroup direction="horizontal">
           <ResizablePanel defaultSize={25} minSize={20}>
             <ResizablePanelGroup direction="vertical">
-              <ResizablePanel defaultSize={40} minSize={10}>
-                <Users
-                  users={users}
-                  updateUser={updateUser}
-                  addUser={addUser}
-                  removeUser={removeUser}
-                />
-              </ResizablePanel>
+              <Users
+                users={users}
+                updateUser={updateUser}
+                addUser={addUser}
+                removeUser={removeUser}
+              />
 
-              <ResizableHandle />
-
-              <ResizablePanel minSize={10}>
-                <Modules
-                  modules={modules}
-                  addModule={addModule}
-                  updateModule={updateModule}
-                  removeModule={removeModule}
-                />
-              </ResizablePanel>
               <ButtonBar
                 users={users}
                 addUser={addUser}
