@@ -48,7 +48,6 @@ export function FileInput({
     }
 
     const events = parseIcsContent(content);
-    console.log(events);
     const user = users.at(-1)!;
     updateUser({
       ...user,

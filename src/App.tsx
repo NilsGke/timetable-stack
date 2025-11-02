@@ -21,8 +21,6 @@ function App() {
   // store data on every update
   useEffect(() => setData({ users, modules }), [users, modules]);
 
-  console.log(users);
-
   return (
     <ThemeProvider defaultTheme="dark" storageKey="timetable-stack-theme">
       <div className="size-full relative">
