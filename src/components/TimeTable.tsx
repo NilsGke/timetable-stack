@@ -116,7 +116,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
                           `bg-${user.color}`,
                           {
                             "rounded-l-sm": index === 0,
-                            "rounded-r-sm": index - 1 === users.length,
+                            "rounded-r-sm": index + 1 === users.length,
                           }
                         )}
                       >
