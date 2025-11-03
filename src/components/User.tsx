@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import ColorSelect from "./ColorSelect";
 import { Button } from "./ui/button";
+import { Trash2Icon } from "lucide-react";
 
 export const User = ({
   user,
@@ -31,7 +32,7 @@ export const User = ({
           />
           {removeUser && (
             <Button onClick={() => removeUser()} variant="outline">
-              -
+              <Trash2Icon className="stroke-red-400" />
             </Button>
           )}
         </div>
