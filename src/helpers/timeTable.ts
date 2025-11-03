@@ -117,8 +117,6 @@ export const createRects = (users: UserType[]) => {
     return { colCount, events: [...dayMap.values()] };
   });
 
-  console.log(rects2);
-
   const rects: Map<
     ReturnType<typeof createKey>,
     {

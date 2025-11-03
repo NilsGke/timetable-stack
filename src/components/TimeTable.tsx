@@ -90,7 +90,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
                     gridRowStart,
                     gridRowEnd,
                     gridColumnStart,
-                    gridColumnEnd,
+                    // gridColumnEnd,
                     borderColor: type.color,
                     backgroundColor: type.color,
                   }}
