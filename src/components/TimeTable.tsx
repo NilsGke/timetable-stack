@@ -73,14 +73,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
           }}
         >
           {events.map(
-            ({
-              event,
-              users,
-              gridColumnStart,
-              gridColumnEnd,
-              gridRowStart,
-              gridRowEnd,
-            }) => {
+            ({ event, users, gridColumnStart, gridRowStart, gridRowEnd }) => {
               const type = eventTypes.find((t) => t.name === event.type)!;
               return (
                 <div
@@ -90,7 +83,6 @@ export function TimeTable({ users }: { users: UserType[] }) {
                     gridRowStart,
                     gridRowEnd,
                     gridColumnStart,
-                    // gridColumnEnd,
                     borderColor: type.color,
                     backgroundColor: type.color,
                   }}
