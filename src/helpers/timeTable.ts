@@ -41,7 +41,7 @@ export const createRects = (users: UserType[]) => {
     (EventType & { user: UserType })[],
     (EventType & { user: UserType })[],
     (EventType & { user: UserType })[],
-    (EventType & { user: UserType })[]
+    (EventType & { user: UserType })[],
   ] = [[], [], [], [], []];
 
   // flatten user events
@@ -50,16 +50,16 @@ export const createRects = (users: UserType[]) => {
       eventColumns[event.startTime.getDay() - 1].push({
         ...event,
         user,
-      })
-    )
+      }),
+    ),
   );
 
   // sort events by their starting time
   eventColumns.forEach(
     (column, index) =>
       (eventColumns[index] = column.sort(
-        (a, b) => a.startTime.getTime() - b.startTime.getTime()
-      ))
+        (a, b) => a.startTime.getTime() - b.startTime.getTime(),
+      )),
   );
 
   const rects2 = eventColumns.map((column) => {
@@ -85,7 +85,7 @@ export const createRects = (users: UserType[]) => {
 
       const intersectingEvents = [...dayMap.values()].filter(
         ({ event: prevEvent }) =>
-          prevEvent.endTime.getTime() > event.startTime.getTime()
+          prevEvent.endTime.getTime() > event.startTime.getTime(),
       );
 
       const usedCols = intersectingEvents.map((event) => event.gridColumnStart);
@@ -96,14 +96,13 @@ export const createRects = (users: UserType[]) => {
 
       // find the next highest number in the set
       const nextUsed = Math.min(
-        ...[...usedCols].filter((n) => n > gridColumnStart)
+        ...[...usedCols].filter((n) => n > gridColumnStart),
       );
 
       // distance to the next highest
       const gridColumnEnd = (nextUsed ? nextUsed - gridColumnStart : 0) + 1;
 
       colCount = Math.max(colCount, gridColumnStart);
-      console.log(gridColumnStart);
 
       dayMap.set(key, {
         ...position,
@@ -112,6 +111,30 @@ export const createRects = (users: UserType[]) => {
         gridColumnStart,
         gridColumnEnd,
       });
+    });
+
+    // increase element width if element does not intersect other element
+    [...dayMap.values()].forEach((rect, index) => {
+      // TODO: implement all cases displayed in excalidraw
+      const intersectingRects = [...dayMap.values()].filter(
+        (r) =>
+          rect.event != r.event &&
+          rect.gridRowStart < r.gridRowEnd &&
+          r.gridRowStart < rect.gridRowEnd,
+      );
+      if (intersectingRects.length === 0) rect.gridColumnEnd = colCount + 1;
+      else {
+        // TODO: calc how long the thing can be by seraching for the next intersecting element
+        const nextTakenCol = intersectingRects
+          .slice(index)
+          .reduce<
+            (typeof intersectingRects)[number] | null
+          >((nextTaken, curr) => (!nextTaken ? curr : nextTaken.gridColumnStart < curr.gridColumnStart || nextTaken.event === curr.event ? nextTaken : curr), null);
+        console.log(rect, nextTakenCol);
+        rect.gridColumnEnd = nextTakenCol
+          ? nextTakenCol.gridColumnStart
+          : rect.gridColumnStart + 1;
+      }
     });
 
     return { colCount, events: [...dayMap.values()] };
@@ -143,6 +166,5 @@ export const createRects = (users: UserType[]) => {
       else existing.users.push(user);
     });
   });
-  console.log(rects);
   return rects2;
 };
