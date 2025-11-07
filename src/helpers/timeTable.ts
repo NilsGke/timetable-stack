@@ -115,7 +115,6 @@ export const createRects = (users: UserType[]) => {
 
     // increase element width if element does not intersect other element
     [...dayMap.values()].forEach((rect, index) => {
-      // TODO: implement all cases displayed in excalidraw
       const intersectingRects = [...dayMap.values()].filter(
         (r) =>
           rect.event != r.event &&
@@ -124,7 +123,6 @@ export const createRects = (users: UserType[]) => {
       );
       if (intersectingRects.length === 0) rect.gridColumnEnd = colCount + 1;
       else {
-        // TODO: calc how long the thing can be by seraching for the next intersecting element
         const nextTakenCol = intersectingRects
           .slice(index)
           .reduce<
