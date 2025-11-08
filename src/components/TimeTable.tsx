@@ -64,7 +64,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
       {rects.map(({ colCount, events }, index) => (
         <div
           key={index}
-          className="row-start-2 grid"
+          className="row-start-2 grid px-2"
           style={{
             gridTemplateRows: `repeat(${CELL_COUNT - 1}, 1fr)`,
             gridTemplateColumns: `repeat(${colCount}, 1fr)`,
@@ -73,7 +73,14 @@ export function TimeTable({ users }: { users: UserType[] }) {
           }}
         >
           {events.map(
-            ({ event, users, gridColumnStart, gridRowStart, gridRowEnd, gridColumnEnd }) => {
+            ({
+              event,
+              users,
+              gridColumnStart,
+              gridRowStart,
+              gridRowEnd,
+              gridColumnEnd,
+            }) => {
               const type = eventTypes.find((t) => t.name === event.type)!;
               return (
                 <div
@@ -110,7 +117,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
                           {
                             "rounded-l-sm": index === 0,
                             "rounded-r-sm": index + 1 === users.length,
-                          }
+                          },
                         )}
                       >
                         {user.name}
@@ -119,7 +126,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
                   </div>
                 </div>
               );
-            }
+            },
           )}
         </div>
       ))}
