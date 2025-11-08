@@ -27,12 +27,15 @@ export const calculateEventPositions = (event: EventType) => {
 };
 
 const createKey = ({
-  gridRowStart,
-  gridRowEnd,
-  moduleName,
-}: ReturnType<typeof calculateEventPositions> & {
-  moduleName: string;
-}) => `${gridRowStart}-${gridRowEnd}-${moduleName}` as const;
+  location,
+  startTime,
+  type,
+}: {
+  location: EventType["location"];
+  startTime: Date;
+  type: EventType["type"];
+}) =>
+  `${type}-${location}-${startTime.getDay()}-${startTime.getHours()}-${startTime.getMinutes()}` as const;
 
 export const createRects = (users: UserType[]) => {
   // one column for each day since days can be handled separately
@@ -77,7 +80,11 @@ export const createRects = (users: UserType[]) => {
 
     column.forEach((event) => {
       const position = calculateEventPositions(event);
-      const key = createKey({ ...position, moduleName: event.module.id });
+      const key = createKey({
+        location: event.location,
+        startTime: event.startTime,
+        type: event.type,
+      });
       const existing = dayMap.get(key);
       const eventType = eventTypes.find((t) => t.name === event.type);
       if (eventType === undefined) throw Error("could not find event type");
@@ -128,7 +135,6 @@ export const createRects = (users: UserType[]) => {
           .reduce<
             (typeof intersectingRects)[number] | null
           >((nextTaken, curr) => (!nextTaken ? curr : nextTaken.gridColumnStart < curr.gridColumnStart || nextTaken.event === curr.event ? nextTaken : curr), null);
-        console.log(rect, nextTakenCol);
         rect.gridColumnEnd = nextTakenCol
           ? nextTakenCol.gridColumnStart
           : rect.gridColumnStart + 1;
@@ -138,31 +144,5 @@ export const createRects = (users: UserType[]) => {
     return { colCount, events: [...dayMap.values()] };
   });
 
-  const rects: Map<
-    ReturnType<typeof createKey>,
-    {
-      users: UserType[];
-      event: EventType;
-      gridColumnStart: number;
-    } & ReturnType<typeof calculateEventPositions>
-  > = new Map();
-
-  users.forEach((user) => {
-    user.events.forEach((event) => {
-      const position = calculateEventPositions(event);
-      const key = createKey({ ...position, moduleName: event.module.id });
-      const existing = rects.get(key);
-      const eventType = eventTypes.find((t) => t.name === event.type);
-      if (eventType === undefined) throw Error("could not find event type");
-      if (!existing)
-        rects.set(key, {
-          ...position,
-          users: [user],
-          event,
-          gridColumnStart: 0,
-        });
-      else existing.users.push(user);
-    });
-  });
   return rects2;
 };
