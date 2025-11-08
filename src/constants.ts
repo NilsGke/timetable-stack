@@ -3,7 +3,7 @@ export const DAYS = [
   "Tuseday",
   "Wednesday",
   "Thursday",
-  "Firday",
+  "Friday",
 ] as const;
 export const STARTING_HOUR = 7;
 export const ENDING_HOUR = 22;
