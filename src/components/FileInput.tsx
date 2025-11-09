@@ -23,7 +23,7 @@ export function FileInput({
   removeUser,
   className,
 }: { className?: string } & ReturnType<typeof useUsers>) {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(users.length === 0);
   const [files, setFiles] = useState<File[]>([]);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = async (event) => {
