@@ -10,6 +10,7 @@ export function ButtonBar({
   addUser,
   updateUser,
   removeUser,
+  reorderUsers,
 }: ReturnType<typeof useUsers>) {
   return (
     <div className="p-8 flex gap-2 justify-center border-t">
@@ -32,6 +33,7 @@ export function ButtonBar({
         addUser={addUser}
         updateUser={updateUser}
         removeUser={removeUser}
+        reorderUsers={reorderUsers}
       />
     </div>
   );

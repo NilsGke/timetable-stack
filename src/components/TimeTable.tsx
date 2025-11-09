@@ -5,7 +5,7 @@ import {
   SLOT_TIME,
   STARTING_HOUR,
 } from "@/constants";
-import type { UserType } from "@/helpers/app.types";
+import type { EventType, UserType } from "@/helpers/app.types";
 import { createRects } from "@/helpers/timeTable";
 import { cn } from "@/lib/utils";
 
@@ -62,74 +62,103 @@ export function TimeTable({ users }: { users: UserType[] }) {
       ))}
 
       {rects.map(({ colCount, events }, index) => (
-        <div
-          key={index}
-          className="row-start-2 grid px-2"
-          style={{
-            gridTemplateRows: `repeat(${CELL_COUNT - 1}, 1fr)`,
-            gridTemplateColumns: `repeat(${colCount}, 1fr)`,
-            gridRowEnd: CELL_COUNT + 1,
-            gridColumnStart: index + 2,
-          }}
-        >
-          {events.map(
-            ({
-              event,
-              users,
-              gridColumnStart,
-              gridRowStart,
-              gridRowEnd,
-              gridColumnEnd,
-            }) => {
-              const type = eventTypes.find((t) => t.name === event.type)!;
-              return (
-                <div
-                  className="mx-0.5 rounded-md text-xs grid grid-rows-[auto_1fr] overflow-hidden border-3"
-                  key={crypto.randomUUID()}
-                  style={{
-                    gridRowStart,
-                    gridRowEnd,
-                    gridColumnStart,
-                    gridColumnEnd,
-                    borderColor: type.color,
-                    backgroundColor: type.color,
-                  }}
-                >
-                  <div
-                    className="text-white px-1"
-                    style={{ backgroundColor: type.color }}
-                  >
-                    {event.module.shortName} – {type.shortName} –{" "}
-                    {event.location}
-                  </div>
-                  <div
-                    className="grid"
-                    style={{
-                      gridTemplateColumns: `repeat(${users.length}, 1fr)`,
-                    }}
-                  >
-                    {users.map((user, index) => (
-                      <div
-                        key={user.id}
-                        className={cn(
-                          `h-full text-black text-lg grid place-items-center`,
-                          `bg-${user.color}`,
-                          {
-                            "rounded-l-sm": index === 0,
-                            "rounded-r-sm": index + 1 === users.length,
-                          },
-                        )}
-                      >
-                        {user.name}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            },
-          )}
-        </div>
+        <TimeTableColumn key={index} {...{ colCount, events }} index={index} />
       ))}
+    </div>
+  );
+}
+
+function TimeTableColumn({
+  events,
+  colCount,
+  index,
+}: ReturnType<typeof createRects>[number] & { index: number }) {
+  return (
+    <div
+      className="row-start-2 grid px-2"
+      style={{
+        gridTemplateRows: `repeat(${CELL_COUNT - 1}, 1fr)`,
+        gridTemplateColumns: `repeat(${colCount}, 1fr)`,
+        gridRowEnd: CELL_COUNT + 1,
+        gridColumnStart: index + 2,
+      }}
+    >
+      {events.map(
+        ({
+          event,
+          users,
+          gridColumnStart,
+          gridRowStart,
+          gridRowEnd,
+          gridColumnEnd,
+        }) => (
+          <TimeTableEvent
+            key={event.location + event.startTime.getTime()}
+            event={event}
+            users={users}
+            style={{
+              gridColumnStart: gridColumnStart.toString(),
+              gridColumnEnd: gridColumnEnd.toString(),
+              gridRowStart: gridRowStart.toString(),
+              gridRowEnd: gridRowEnd.toString(),
+            }}
+          />
+        ),
+      )}
+    </div>
+  );
+}
+
+function TimeTableEvent({
+  style,
+  event,
+  users,
+}: {
+  style: {
+    gridRowStart: string;
+    gridRowEnd: string;
+    gridColumnStart: string;
+    gridColumnEnd: string;
+  };
+  event: EventType;
+  users: UserType[];
+}) {
+  const type = eventTypes.find((t) => t.name === event.type)!;
+  return (
+    <div
+      className="mx-0.5 rounded-md text-xs grid grid-rows-[auto_1fr] overflow-hidden border-3"
+      key={crypto.randomUUID()}
+      style={{
+        ...style,
+        borderColor: type.color,
+        backgroundColor: type.color,
+      }}
+    >
+      <div className="text-white px-1" style={{ backgroundColor: type.color }}>
+        {event.module.shortName} – {type.shortName} – {event.location}
+      </div>
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `repeat(${users.length}, 1fr)`,
+        }}
+      >
+        {users.map((user, index) => (
+          <div
+            key={user.id}
+            className={cn(
+              `h-full text-black text-lg grid place-items-center`,
+              `bg-${user.color}`,
+              {
+                "rounded-l-sm": index === 0,
+                "rounded-r-sm": index + 1 === users.length,
+              },
+            )}
+          >
+            {user.name}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

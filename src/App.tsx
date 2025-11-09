@@ -13,7 +13,7 @@ import { ButtonBar } from "./components/ButtonBar";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
-  const { users, addUser, updateUser, removeUser } = useUsers();
+  const { users, addUser, updateUser, removeUser, reorderUsers } = useUsers();
 
   // store data on every update
   useEffect(() => setData({ users }), [users]);
@@ -29,6 +29,7 @@ function App() {
                 updateUser={updateUser}
                 addUser={addUser}
                 removeUser={removeUser}
+                reorderUsers={reorderUsers}
               />
 
               <ButtonBar
@@ -36,6 +37,7 @@ function App() {
                 addUser={addUser}
                 updateUser={updateUser}
                 removeUser={removeUser}
+                reorderUsers={reorderUsers}
               />
             </ResizablePanelGroup>
           </ResizablePanel>

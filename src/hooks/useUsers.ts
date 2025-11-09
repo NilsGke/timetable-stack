@@ -26,5 +26,7 @@ export const useUsers = () => {
   const removeUser = (id: UserType["id"]) =>
     setUsers(users.filter((user) => user.id !== id));
 
-  return { users, updateUser, addUser, removeUser };
+  const reorderUsers = (users: UserType[]) => setUsers(users);
+
+  return { users, updateUser, addUser, removeUser, reorderUsers };
 };
