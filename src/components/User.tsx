@@ -8,54 +8,62 @@ import { Reorder, useDragControls } from "motion/react";
 
 export const User = ({
   user,
+  reordable = false,
   updateUser,
   removeUser,
 }: {
   user: UserType;
+  reoradble?: boolean;
   updateUser: (user: UserType) => void;
   removeUser?: () => void;
 }) => {
   const controls = useDragControls();
-  return (
-    <Reorder.Item
-      key={user.id}
-      value={user}
-      dragControls={controls}
-      as="div"
-      dragListener={false}
-    >
-      <Card className="w-full">
-        <CardContent>
-          <div className="grid grid-cols-[auto_1fr_auto_auto] gap-4">
-            <div
-              onPointerDown={(e) => controls.start(e)}
-              className="grid  cursor-grab place-items-center"
-            >
-              <GripVertical
-                size={18}
-                className="text-zinc-400 dark:text-zinc-600"
-              />
-            </div>
-            <Input
-              type="text"
-              placeholder="name"
-              value={user.name}
-              onChange={(event) => {
-                updateUser({ ...user, name: event.target.value });
-              }}
+  const Content = (
+    <Card className="w-full">
+      <CardContent>
+        <div className="grid grid-cols-[auto_1fr_auto_auto] gap-4">
+          <div
+            onPointerDown={(e) => controls.start(e)}
+            className="grid  cursor-grab place-items-center"
+          >
+            <GripVertical
+              size={18}
+              className="text-zinc-400 dark:text-zinc-600"
             />
-            <ColorSelect
-              color={user.color}
-              updateColor={(color) => updateUser({ ...user, color })}
-            />
-            {removeUser && (
-              <Button onClick={() => removeUser()} variant="outline">
-                <Trash2Icon className="stroke-red-400" />
-              </Button>
-            )}
           </div>
-        </CardContent>
-      </Card>
-    </Reorder.Item>
+          <Input
+            type="text"
+            placeholder="name"
+            value={user.name}
+            onChange={(event) => {
+              updateUser({ ...user, name: event.target.value });
+            }}
+          />
+          <ColorSelect
+            color={user.color}
+            updateColor={(color) => updateUser({ ...user, color })}
+          />
+          {removeUser && (
+            <Button onClick={() => removeUser()} variant="outline">
+              <Trash2Icon className="stroke-red-400" />
+            </Button>
+          )}
+        </div>
+      </CardContent>
+    </Card>
   );
+
+  if (reordable)
+    return (
+      <Reorder.Item
+        key={user.id}
+        value={user}
+        dragControls={controls}
+        as="div"
+        dragListener={false}
+      >
+        {Content}
+      </Reorder.Item>
+    );
+  else return Content;
 };

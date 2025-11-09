@@ -12,11 +12,11 @@ export const useUsers = () => {
     newUsers[index] = newUser;
     setUsers(newUsers);
   };
-  const addUser = () =>
-    setUsers([
+  const addUser = ({ name }: { name: string | undefined }) =>
+    setUsers((users) => [
       ...users,
       {
-        name: "",
+        name: name || "",
         color: getUnusedColor(users.map((user) => user.color)),
         events: [],
         id: crypto.randomUUID(),

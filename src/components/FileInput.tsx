@@ -30,11 +30,17 @@ export function FileInput({
     if (event.target.files === null) return toast.error("no files");
     const files = Array.from(event.target.files);
     if (files.length === 0) return toast.error("No files");
-    addUser();
+    addUser({ name: files.at(0)?.name.split(".").at(0) });
     setFiles(files);
+  };
 
-    // const content = await file.text().catch(() => null);
-    // if (content === null) return toast.error("error while parsing file");
+  const submit = async () => {
+    await parseIcs();
+    // decide if we need another user for the next file
+    // files.at(1) because we have not yet removed the first file
+    if (files.length > 1) addUser({ name: files.at(1)?.name.split(".").at(0) });
+    if (files.length === 1) setDialogOpen(false);
+    setFiles(files.slice(1));
   };
 
   const parseIcs = async () => {
@@ -64,7 +70,11 @@ export function FileInput({
             <Upload className="size-6" />
           </Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent
+          onKeyDown={(e) => {
+            if (e.key === "Enter") submit();
+          }}
+        >
           {files.length === 0 ? (
             <>
               <DialogHeader>
@@ -98,15 +108,7 @@ export function FileInput({
                 >
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>
-                <Button
-                  type="submit"
-                  onClick={async () => {
-                    await parseIcs();
-                    if (files.length > 1) addUser();
-                    if (files.length === 1) setDialogOpen(false);
-                    setFiles(files.slice(1));
-                  }}
-                >
+                <Button type="submit" onClick={submit}>
                   {files.length >= 1 ? "Next File" : "Save"}
                 </Button>
               </DialogFooter>
