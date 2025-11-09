@@ -21,6 +21,7 @@ export function Users({
       >
         {users.map((user) => (
           <User
+            reordable={true}
             key={user.id}
             user={user}
             updateUser={updateUser}

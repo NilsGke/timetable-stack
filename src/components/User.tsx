@@ -5,6 +5,7 @@ import ColorSelect from "./ColorSelect";
 import { Button } from "./ui/button";
 import { GripVertical, Trash2Icon } from "lucide-react";
 import { Reorder, useDragControls } from "motion/react";
+import { cn } from "@/lib/utils";
 
 export const User = ({
   user,
@@ -13,7 +14,7 @@ export const User = ({
   removeUser,
 }: {
   user: UserType;
-  reoradble?: boolean;
+  reordable?: boolean;
   updateUser: (user: UserType) => void;
   removeUser?: () => void;
 }) => {
@@ -21,16 +22,25 @@ export const User = ({
   const Content = (
     <Card className="w-full">
       <CardContent>
-        <div className="grid grid-cols-[auto_1fr_auto_auto] gap-4">
-          <div
-            onPointerDown={(e) => controls.start(e)}
-            className="grid  cursor-grab place-items-center"
-          >
-            <GripVertical
-              size={18}
-              className="text-zinc-400 dark:text-zinc-600"
-            />
-          </div>
+        <div
+          className={cn([
+            "grid gap-4",
+            reordable
+              ? "grid-cols-[auto_1fr_auto_auto]"
+              : "grid-cols-[1fr_auto]",
+          ])}
+        >
+          {reordable && (
+            <div
+              onPointerDown={(e) => controls.start(e)}
+              className="grid  cursor-grab place-items-center"
+            >
+              <GripVertical
+                size={18}
+                className="text-zinc-400 dark:text-zinc-600"
+              />
+            </div>
+          )}
           <Input
             type="text"
             placeholder="name"
