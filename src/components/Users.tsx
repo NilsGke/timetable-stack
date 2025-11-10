@@ -1,6 +1,5 @@
 import { User } from "@/components/User";
 import type { useUsers } from "@/hooks/useUsers";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Reorder } from "motion/react";
 
 export function Users({
