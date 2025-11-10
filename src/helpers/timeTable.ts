@@ -128,15 +128,21 @@ export const createRects = (users: UserType[]) => {
           rect.gridRowStart < r.gridRowEnd &&
           r.gridRowStart < rect.gridRowEnd,
       );
+      console.log(
+        index,
+        rect.gridColumnStart,
+        intersectingRects.map((r) => r.gridColumnStart),
+      );
       if (intersectingRects.length === 0) rect.gridColumnEnd = colCount + 1;
       else {
-        const nextTakenCol = intersectingRects
-          .slice(index)
-          .reduce<
-            (typeof intersectingRects)[number] | null
-          >((nextTaken, curr) => (!nextTaken ? curr : nextTaken.gridColumnStart < curr.gridColumnStart || nextTaken.event === curr.event ? nextTaken : curr), null);
+        const nextTakenCol = Math.min(
+          ...intersectingRects
+            .map(({ gridColumnStart }) => gridColumnStart)
+            .filter((n) => n > rect.gridColumnStart),
+        );
+        console.log(nextTakenCol);
         rect.gridColumnEnd = nextTakenCol
-          ? nextTakenCol.gridColumnStart
+          ? nextTakenCol
           : rect.gridColumnStart + 1;
       }
     });
