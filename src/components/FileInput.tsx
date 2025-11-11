@@ -15,6 +15,7 @@ import {
 import { User } from "./User";
 import type { useUsers } from "@/hooks/useUsers";
 import { parseIcsContent } from "@/helpers/ics";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function FileInput({
   users,
@@ -65,11 +66,16 @@ export function FileInput({
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={(state) => setDialogOpen(state)}>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="icon" className={className}>
-            <Upload className="size-6" />
-          </Button>
-        </DialogTrigger>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="icon" className={className}>
+                <Upload className="size-6" />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent>Import ICS file</TooltipContent>
+        </Tooltip>
         <DialogContent
           onKeyDown={(e) => {
             if (e.key === "Enter") submit();

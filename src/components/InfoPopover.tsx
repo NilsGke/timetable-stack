@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/dialog";
 import { Check, CircleQuestionMark, Copy } from "lucide-react";
 import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export function InfoPopover({ className }: { className?: string }) {
   async function copy() {
     const copyIcon = document.getElementById("copy-button-copy");
     const checkIcon = document.getElementById("copy-button-check");
     await window.navigator.clipboard.writeText(
-      "https://aor.cs.hs-rm.de/plans.ics?user_plan=true"
+      "https://aor.cs.hs-rm.de/plans.ics?user_plan=true",
     );
     copyIcon!.style.opacity = "0";
     checkIcon!.style.opacity = "1";
@@ -25,11 +26,16 @@ export function InfoPopover({ className }: { className?: string }) {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="icon" className={className}>
-          <CircleQuestionMark className="size-6" />
-        </Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="icon" className={className}>
+              <CircleQuestionMark className="size-6" />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Info</TooltipContent>
+      </Tooltip>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>What is this and how does it work?</DialogTitle>

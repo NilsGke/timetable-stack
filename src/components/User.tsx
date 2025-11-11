@@ -6,6 +6,7 @@ import { Button } from "./ui/button";
 import { GripVertical, Trash2Icon } from "lucide-react";
 import { Reorder, useDragControls } from "motion/react";
 import { cn } from "@/lib/utils";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export const User = ({
   user,
@@ -54,9 +55,14 @@ export const User = ({
             updateColor={(color) => updateUser({ ...user, color })}
           />
           {removeUser && (
-            <Button onClick={() => removeUser()} variant="outline">
-              <Trash2Icon className="stroke-red-400" />
-            </Button>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button onClick={() => removeUser()} variant="outline">
+                  <Trash2Icon className="stroke-red-400" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>remove</TooltipContent>
+            </Tooltip>
           )}
         </div>
       </CardContent>
