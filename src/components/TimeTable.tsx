@@ -79,8 +79,8 @@ export function TimeTable({
         id="watermark"
         className="-row-start-5 row-span-3 col-start-3 mx-[20%] col-span-3 justify-center items-center hidden"
       >
-        <div className="px-8 text-lg py-3 rounded border bg-zinc-50 text-black/50 dark:text-white/40 dark:bg-zinc-950">
-          generated with {window.location.host}
+        <div className="px-2 text-lg py-1 rounded-lg border bg-zinc-50 text-black/60 dark:text-white/60 dark:bg-zinc-950">
+          Generated with ~ {window.location.host} ~ ♥︎
         </div>
       </div>
     </div>

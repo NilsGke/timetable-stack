@@ -17,6 +17,8 @@ import type { useUsers } from "@/hooks/useUsers";
 import { parseIcsContent } from "@/helpers/ics";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import AORLink from "./AORLink";
+import Ping from "./Ping";
+import { cn } from "@/lib/utils";
 
 export function FileInput({
   users,
@@ -70,8 +72,13 @@ export function FileInput({
         <Tooltip>
           <TooltipTrigger asChild>
             <DialogTrigger asChild>
-              <Button variant="outline" size="icon" className={className}>
+              <Button
+                variant="outline"
+                size="icon"
+                className={cn("relative", className)}
+              >
                 <Upload className="size-6" />
+                {users.length === 0 && <Ping />}
               </Button>
             </DialogTrigger>
           </TooltipTrigger>

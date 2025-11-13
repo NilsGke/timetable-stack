@@ -27,10 +27,12 @@ export function Users({
             removeUser={() => removeUser(user.id)}
           />
         ))}
+        {users.length === 0 && (
+          <span className="text-zinc-400 w-full text-center dark:text-zinc-600">
+            no users
+          </span>
+        )}
       </Reorder.Group>
-      {users.length === 0 && (
-        <span className="text-zinc-400 dark:text-zinc-600">no users</span>
-      )}
     </div>
   );
 }
