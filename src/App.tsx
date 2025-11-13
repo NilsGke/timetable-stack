@@ -6,7 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { setData } from "./helpers/localStorage";
 import { TimeTable } from "./components/TimeTable";
 import { ButtonBar } from "./components/ButtonBar";
@@ -17,6 +17,8 @@ function App() {
 
   // store data on every update
   useEffect(() => setData({ users }), [users]);
+  // time table ref to pass to the screenshot button
+  const timetableRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="timetable-stack-theme">
@@ -38,6 +40,7 @@ function App() {
                 updateUser={updateUser}
                 removeUser={removeUser}
                 reorderUsers={reorderUsers}
+                timetableRef={timetableRef}
               />
             </ResizablePanelGroup>
           </ResizablePanel>
@@ -45,7 +48,7 @@ function App() {
           <ResizableHandle />
 
           <ResizablePanel minSize={50}>
-            <TimeTable users={users} />
+            <TimeTable users={users} ref={timetableRef} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>

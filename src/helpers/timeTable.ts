@@ -121,17 +121,12 @@ export const createRects = (users: UserType[]) => {
     });
 
     // increase element width if element does not intersect other element
-    [...dayMap.values()].forEach((rect, index) => {
+    [...dayMap.values()].forEach((rect) => {
       const intersectingRects = [...dayMap.values()].filter(
         (r) =>
           rect.event != r.event &&
           rect.gridRowStart < r.gridRowEnd &&
           r.gridRowStart < rect.gridRowEnd,
-      );
-      console.log(
-        index,
-        rect.gridColumnStart,
-        intersectingRects.map((r) => r.gridColumnStart),
       );
       if (intersectingRects.length === 0) rect.gridColumnEnd = colCount + 1;
       else {
@@ -140,7 +135,6 @@ export const createRects = (users: UserType[]) => {
             .map(({ gridColumnStart }) => gridColumnStart)
             .filter((n) => n > rect.gridColumnStart),
         );
-        console.log(nextTakenCol);
         rect.gridColumnEnd = nextTakenCol
           ? nextTakenCol
           : rect.gridColumnStart + 1;

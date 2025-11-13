@@ -8,12 +8,20 @@ import {
 import type { EventType, UserType } from "@/helpers/app.types";
 import { createRects } from "@/helpers/timeTable";
 import { cn } from "@/lib/utils";
+import type { RefObject } from "react";
 
-export function TimeTable({ users }: { users: UserType[] }) {
+export function TimeTable({
+  users,
+  ref,
+}: {
+  users: UserType[];
+  ref: RefObject<HTMLDivElement | null>;
+}) {
   const rects = createRects(users);
   return (
     <div
-      className="p-8 grid grid-cols-[auto_repeat(5,1fr)] size-full"
+      ref={ref}
+      className="p-8 grid grid-cols-[auto_repeat(5,1fr)] bg-white dark:bg-black size-full"
       style={{ gridTemplateRows: `repeat(${CELL_COUNT + 1}, 1fr)` }}
     >
       {/* top row dates */}
@@ -47,7 +55,7 @@ export function TimeTable({ users }: { users: UserType[] }) {
       {Array.from({ length: CELL_COUNT }).map((_, index) => (
         <div
           key={index}
-          className="bg-zinc-400 dark:bg-zinc-700 h-[.5px] col-start-1 col-end-7"
+          className="bg-zinc-400 dark:bg-zinc-700 h-px col-start-1 col-end-7"
           style={{ gridRowStart: index + 2 }}
         />
       ))}
@@ -56,14 +64,25 @@ export function TimeTable({ users }: { users: UserType[] }) {
       {Array.from({ length: 5 }).map((_, index) => (
         <div
           key={index}
-          className="bg-zinc-400 dark:bg-zinc-700 w-[.5px] row-start-1"
+          className="bg-zinc-400 dark:bg-zinc-700 w-px row-start-1"
           style={{ gridColumnStart: index + 2, gridRowEnd: CELL_COUNT + 2 }}
         />
       ))}
 
+      {/* events */}
       {rects.map(({ colCount, events }, index) => (
         <TimeTableColumn key={index} {...{ colCount, events }} index={index} />
       ))}
+
+      {/* eport watermark */}
+      <div
+        id="watermark"
+        className="-row-start-5 row-span-3 col-start-3 mx-[20%] col-span-3 justify-center items-center hidden"
+      >
+        <div className="px-8 text-lg py-3 rounded border bg-zinc-50 text-black/50 dark:text-white/40 dark:bg-zinc-950">
+          generated with {window.location.host}
+        </div>
+      </div>
     </div>
   );
 }

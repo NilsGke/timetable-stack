@@ -5,6 +5,8 @@ import { InfoPopover } from "./InfoPopover";
 import { FileInput } from "./FileInput";
 import type { useUsers } from "@/hooks/useUsers";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import ScreenshotButton from "./ScreenshotButton";
+import type { RefObject } from "react";
 
 export function ButtonBar({
   users,
@@ -12,7 +14,10 @@ export function ButtonBar({
   updateUser,
   removeUser,
   reorderUsers,
-}: ReturnType<typeof useUsers>) {
+  timetableRef,
+}: ReturnType<typeof useUsers> & {
+  timetableRef: RefObject<HTMLElement | null>;
+}) {
   return (
     <div className="p-8 flex gap-2 justify-center border-t">
       <DarkModeToggle className="size-12" />
@@ -38,6 +43,8 @@ export function ButtonBar({
       </Tooltip>
 
       <InfoPopover className="size-12" />
+
+      <ScreenshotButton className="size-12" timetableRef={timetableRef} />
 
       <FileInput
         className="size-12"
