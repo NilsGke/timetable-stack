@@ -6,24 +6,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Check, CircleQuestionMark, Copy } from "lucide-react";
+import { CircleQuestionMark } from "lucide-react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import AORLink from "./AORLink";
 
 export function InfoPopover({ className }: { className?: string }) {
-  async function copy() {
-    const copyIcon = document.getElementById("copy-button-copy");
-    const checkIcon = document.getElementById("copy-button-check");
-    await window.navigator.clipboard.writeText(
-      "https://aor.cs.hs-rm.de/plans.ics?user_plan=true",
-    );
-    copyIcon!.style.opacity = "0";
-    checkIcon!.style.opacity = "1";
-    await new Promise((r) => setTimeout(r, 1000));
-    copyIcon!.style.opacity = "1";
-    checkIcon!.style.opacity = "0";
-  }
-
   return (
     <Dialog>
       <Tooltip>
@@ -47,21 +35,7 @@ export function InfoPopover({ className }: { className?: string }) {
             <br />
             The import button at the bottom left lets you import a csv file that
             you can export at
-            <span className="flex underline items-center">
-              aor.cs.hs-rm.de/plans.ics?user_plan=true
-              <Button
-                size="sm"
-                variant="link"
-                onClick={copy}
-                className="relative"
-              >
-                <Copy id="copy-button-copy" className="transition-opacity" />
-                <Check
-                  id="copy-button-check"
-                  className="opacity-0 absolute transition-opacity"
-                />
-              </Button>
-            </span>
+            <AORLink />
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

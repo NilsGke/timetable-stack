@@ -16,6 +16,7 @@ import { User } from "./User";
 import type { useUsers } from "@/hooks/useUsers";
 import { parseIcsContent } from "@/helpers/ics";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import AORLink from "./AORLink";
 
 export function FileInput({
   users,
@@ -85,6 +86,9 @@ export function FileInput({
             <>
               <DialogHeader>
                 <DialogTitle>Import ics file</DialogTitle>
+                <DialogDescription>
+                  You can get the ICS file from <AORLink />
+                </DialogDescription>
               </DialogHeader>
               <label
                 htmlFor="ics-file-input"
