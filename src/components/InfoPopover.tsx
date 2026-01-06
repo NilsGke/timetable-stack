@@ -28,14 +28,16 @@ export function InfoPopover({ className }: { className?: string }) {
         <DialogHeader>
           <DialogTitle>What is this and how does it work?</DialogTitle>
           <DialogDescription>
-            This single-page React application displays university timetables
-            for multiple users, providing a clear overview of each person’s
-            schedule at any given time.
+            This React SPA displays university timetables for multiple users,
+            providing a clear overview of each person’s schedule at any given
+            time.
             <br />
             <br />
             The import button at the bottom left lets you import a csv file that
-            you can export at
-            <AORLink />
+            you can export at <AORLink />
+            <br />
+            <br />
+            All data is handled locally and never leaves your machine.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
