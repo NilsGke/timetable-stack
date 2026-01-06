@@ -47,7 +47,7 @@ function App() {
 
           <ResizableHandle />
 
-          <ResizablePanel minSize={50}>
+          <ResizablePanel minSize={50} className="overflow-y-scroll!">
             <TimeTable users={users} ref={timetableRef} />
           </ResizablePanel>
         </ResizablePanelGroup>

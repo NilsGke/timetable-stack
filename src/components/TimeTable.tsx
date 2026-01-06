@@ -42,7 +42,7 @@ export function TimeTable({
         return (
           <div
             key={index}
-            className="col-start-1 w-full text-right text-xs dark:text-zinc-300 text-zinc-800"
+            className="font-mono -mb-px col-start-1 w-full text-right text-xs dark:text-zinc-300 text-zinc-800"
             style={{ gridRowStart: index + 2 }}
           >
             {hour < 10 ? "0" + hour : hour}:
@@ -79,7 +79,7 @@ export function TimeTable({
         id="watermark"
         className="-row-start-5 row-span-3 col-start-3 mx-[20%] col-span-3 justify-center items-center hidden"
       >
-        <div className="px-2 text-lg py-1 rounded-lg border bg-zinc-50 text-black/60 dark:text-white/60 dark:bg-zinc-950">
+        <div className="px-2 text-md py-1 rounded-lg border bg-zinc-50 text-black/60 dark:text-white/60 dark:bg-zinc-950">
           Generated with ~ {window.location.host} ~ ♥︎
         </div>
       </div>
@@ -166,7 +166,7 @@ function TimeTableEvent({
           <div
             key={user.id}
             className={cn(
-              `h-full text-black text-lg grid place-items-center`,
+              "h-full text-black text-lg grid place-items-center",
               `bg-${user.color}`,
               {
                 "rounded-l-sm": index === 0,
