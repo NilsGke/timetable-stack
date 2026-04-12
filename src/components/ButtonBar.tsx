@@ -19,41 +19,56 @@ export function ButtonBar({
   timetableRef: RefObject<HTMLElement | null>;
 }) {
   return (
-    <div className="p-8 flex gap-2 justify-center border-t">
-      <DarkModeToggle className="size-12" />
+    <div className="px-8 py-4  border-t">
+      <div className="flex gap-2 justify-center">
+        <DarkModeToggle className="size-12" />
 
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="outline"
-            asChild
-            size="icon"
-            aria-label="Submit"
-            className="size-12"
-          >
-            <a
-              href="https://github.com/NilsGke/timetable-stack"
-              target="_blank"
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              asChild
+              size="icon"
+              aria-label="Submit"
+              className="size-12"
             >
-              <Github className="size-6" />
-            </a>
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Repository</TooltipContent>
-      </Tooltip>
+              <a
+                href="https://github.com/NilsGke/timetable-stack"
+                target="_blank"
+              >
+                <Github className="size-6" />
+              </a>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Repository</TooltipContent>
+        </Tooltip>
 
-      <InfoPopover className="size-12" />
+        <InfoPopover className="size-12" />
 
-      <ScreenshotButton className="size-12" timetableRef={timetableRef} />
+        <ScreenshotButton className="size-12" timetableRef={timetableRef} />
 
-      <FileInput
-        className="size-12"
-        users={users}
-        addUser={addUser}
-        updateUser={updateUser}
-        removeUser={removeUser}
-        reorderUsers={reorderUsers}
-      />
+        <FileInput
+          className="size-12"
+          users={users}
+          addUser={addUser}
+          updateUser={updateUser}
+          removeUser={removeUser}
+          reorderUsers={reorderUsers}
+        />
+      </div>
+      <div className="text-center mt-2 text-xs space-x-2 text-zinc-400 dark:text-zinc-500">
+        <a target="_blank" href="https://nilsgke.dev">
+          Nils Goeke
+        </a>
+        <span>|</span>
+        <a target="_blank" href="https://legal.nilsgke.dev/impressum">
+          Impressum
+        </a>
+        <span>|</span>
+        <a target="_blank" href="https://legal.nilsgke.dev/datenschutz">
+          Datenschutz
+        </a>
+      </div>
     </div>
   );
 }
