@@ -2,8 +2,10 @@ import { useState } from "react";
 import type { UserType } from "../helpers/app.types";
 import { getUnusedColor } from "@/helpers/colors";
 import { getData } from "@/helpers/localStorage";
+import { usePostHog } from "@posthog/react";
 
 export const useUsers = () => {
+  const posthog = usePostHog();
   const [users, setUsers] = useState<UserType[]>(getData().users);
   const updateUser = (newUser: UserType) => {
     const index = users.findIndex(({ id }) => id === newUser.id);
@@ -12,7 +14,7 @@ export const useUsers = () => {
     newUsers[index] = newUser;
     setUsers(newUsers);
   };
-  const addUser = ({ name }: { name: string | undefined }) =>
+  const addUser = ({ name }: { name: string | undefined }) => {
     setUsers((users) => [
       ...users,
       {
@@ -22,6 +24,8 @@ export const useUsers = () => {
         id: crypto.randomUUID(),
       },
     ]);
+    posthog.capture("added_ics_file");
+  };
 
   const removeUser = (id: UserType["id"]) =>
     setUsers(users.filter((user) => user.id !== id));

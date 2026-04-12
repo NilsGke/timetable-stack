@@ -28,6 +28,7 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Label } from "./ui/label";
 import { useTheme, type Theme } from "@/helpers/themeProvider";
 import { toast } from "sonner";
+import { usePostHog } from "@posthog/react";
 
 export default function ScreenshotButton({
   className,
@@ -36,6 +37,7 @@ export default function ScreenshotButton({
   className?: string;
   timetableRef: RefObject<HTMLElement | null>;
 }) {
+  const posthog = usePostHog();
   const [format, setFormat] = useState<keyof typeof formatMap>("JPEG");
   const { theme } = useTheme();
   const [exportTheme, setExportTheme] = useState(
@@ -87,6 +89,8 @@ export default function ScreenshotButton({
     body.classList.remove(exportTheme);
     body.classList.add(theme);
     watermark.style.display = "none";
+
+    posthog.capture("created_screenshot");
 
     return imageData;
   };
