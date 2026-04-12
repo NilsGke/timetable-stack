@@ -125,8 +125,12 @@ export function FileInput({
                 >
                   <Button variant="outline">Cancel</Button>
                 </DialogClose>
-                <Button type="submit" onClick={submit}>
-                  {files.length >= 1 ? "Next File" : "Save"}
+                <Button
+                  type="submit"
+                  onClick={submit}
+                  data-umami-event="add ics file button"
+                >
+                  {files.length > 1 ? "Next File" : "Save"}
                 </Button>
               </DialogFooter>
             </>

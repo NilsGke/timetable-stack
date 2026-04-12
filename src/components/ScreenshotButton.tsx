@@ -154,13 +154,17 @@ export default function ScreenshotButton({
 
         <DialogFooter className="sm:justify-end">
           <DialogClose>
-            <Button onClick={() => screenshot().then(downloadScreenshot)}>
+            <Button
+              data-umami-event="screenshot download button"
+              onClick={() => screenshot().then(downloadScreenshot)}
+            >
               Download
             </Button>
           </DialogClose>
 
           <DialogClose>
             <Button
+              data-umami-event="screenshot new tab button"
               onClick={() => screenshot().then(openImageInNewTab)}
               variant="secondary"
             >
