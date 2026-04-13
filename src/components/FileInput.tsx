@@ -1,4 +1,4 @@
-import { Upload } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState, type ChangeEventHandler } from "react";
 import { toast } from "sonner";
@@ -25,8 +25,7 @@ export function FileInput({
   addUser,
   updateUser,
   removeUser,
-  className,
-}: { className?: string } & ReturnType<typeof useUsers>) {
+}: ReturnType<typeof useUsers>) {
   const [dialogOpen, setDialogOpen] = useState(users.length === 0);
   const [files, setFiles] = useState<File[]>([]);
 
@@ -69,21 +68,17 @@ export function FileInput({
   return (
     <>
       <Dialog open={dialogOpen} onOpenChange={(state) => setDialogOpen(state)}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className={cn("relative", className)}
-              >
-                <Upload className="size-6" />
-                {users.length === 0 && <Ping />}
-              </Button>
-            </DialogTrigger>
-          </TooltipTrigger>
-          <TooltipContent>Import ICS file</TooltipContent>
-        </Tooltip>
+        <DialogTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            className="pr-3! relative w-fit mx-auto rounded-full bg-transparent"
+          >
+            <Plus className="size-4" />
+            Add user
+            {users.length === 0 && <Ping />}
+          </Button>
+        </DialogTrigger>
         <DialogContent
           onKeyDown={(e) => {
             if (e.key === "Enter") submit();

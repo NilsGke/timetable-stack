@@ -46,15 +46,6 @@ export function ButtonBar({
         <InfoPopover className="size-12" />
 
         <ScreenshotButton className="size-12" timetableRef={timetableRef} />
-
-        <FileInput
-          className="size-12"
-          users={users}
-          addUser={addUser}
-          updateUser={updateUser}
-          removeUser={removeUser}
-          reorderUsers={reorderUsers}
-        />
       </div>
       <div className="text-center mt-2 text-xs space-x-2 text-zinc-400 dark:text-zinc-500">
         <a target="_blank" href="https://nilsgke.dev">

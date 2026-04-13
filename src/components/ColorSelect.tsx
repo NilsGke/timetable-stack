@@ -18,7 +18,7 @@ export default function ColorSelect({
 }) {
   return (
     <Select value={color} onValueChange={updateColor}>
-      <SelectTrigger className="w-36">
+      <SelectTrigger className="w-30">
         <SelectValue placeholder="Select a color" />
       </SelectTrigger>
       <SelectContent>

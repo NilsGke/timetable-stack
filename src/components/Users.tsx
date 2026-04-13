@@ -1,9 +1,11 @@
 import { User } from "@/components/User";
 import type { useUsers } from "@/hooks/useUsers";
 import { Reorder } from "motion/react";
+import { FileInput } from "./FileInput";
 
 export function Users({
   users,
+  addUser,
   updateUser,
   removeUser,
   reorderUsers,
@@ -32,6 +34,14 @@ export function Users({
             no users
           </span>
         )}
+
+        <FileInput
+          users={users}
+          addUser={addUser}
+          updateUser={updateUser}
+          removeUser={removeUser}
+          reorderUsers={reorderUsers}
+        />
       </Reorder.Group>
     </div>
   );
